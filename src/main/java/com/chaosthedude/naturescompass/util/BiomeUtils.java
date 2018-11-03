@@ -112,9 +112,13 @@ public class BiomeUtils {
 	}
 
 	public static boolean biomeIsBlacklisted(Biome biome) {
-		final List<String> biomeBlacklist = ConfigHandler.getBiomeBlacklistV1();
-		return biomeBlacklist.contains(String.valueOf(Biome.getIdForBiome(biome)))
-				|| biomeBlacklist.contains(getBiomeName(biome)) || biomeBlacklist.contains(biome.getBiomeName());
+        if (ConfigHandler.biomeBlacklistVersion == 2) {
+            final List<String> biomeBlacklist = ConfigHandler.getBiomeBlacklistV2();
+            return biomeBlacklist.contains(String.valueOf(biome.getRegistryName()));
+        } else {
+			final List<String> biomeBlacklist = ConfigHandler.getBiomeBlacklistV1();
+			return biomeBlacklist.contains(String.valueOf(Biome.getIdForBiome(biome)))
+					|| biomeBlacklist.contains(getBiomeName(biome)) || biomeBlacklist.contains(biome.getBiomeName());
+        }
 	}
-
 }

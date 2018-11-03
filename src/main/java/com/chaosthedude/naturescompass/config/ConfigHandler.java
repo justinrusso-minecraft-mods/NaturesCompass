@@ -17,8 +17,9 @@ public class ConfigHandler {
 	public static Configuration config;
 
 	public static boolean allowTeleport = true;
-	public static String[] biomeBlacklist = {};
+	public static int biomeBlacklistVersion = 1; // For backwards compatibility, default to version 1 until 1.13
     private static String[] biomeBlacklistV1 = {};
+    private static String[] biomeBlacklistV2 = {};
 	public static int distanceModifier = 2500;
 	public static int sampleSpaceModifier = 16;
 	public static int maxSamples = 100000;
@@ -47,8 +48,16 @@ public class ConfigHandler {
 		comment = "biomeSize * sampleSpaceModifier = sampleSpace. Lowering this value will increase search accuracy but will make the process more resource intensive.";
 		sampleSpaceModifier = loadInt(Configuration.CATEGORY_GENERAL, "naturescompass.sampleSpaceModifier", comment, sampleSpaceModifier);
 
-		comment = "A list of biomes that the compass will not be able to search for. Both biome names and numerical biome IDs are accepted.";
+        comment = "Biome Blacklist Version (1 or 2) to be used";
+        biomeBlacklistVersion = loadInt(Configuration.CATEGORY_GENERAL, "naturescompass.biomeBlacklistVersion", comment, biomeBlacklistVersion);
+
+		comment = "A list of biomes that the compass will not be able to search for. Both biome names and numerical biome IDs are accepted. " +
+                "naturescompass.biomeBlacklistVersion must be set to 1";
 		biomeBlacklistV1 = loadStringArray(Configuration.CATEGORY_GENERAL, "naturescompass.biomeBlacklistV1", comment, biomeBlacklistV1);
+
+        comment = "A list of biomes that the compass will not be able to search for. ONLY Biome Resource Locations are supported (ex: minecraft:plains). " +
+                "naturescompass.biomeBlacklistVersion must be set to 2";
+        biomeBlacklistV2 = loadStringArray(Configuration.CATEGORY_GENERAL, "naturescompass.biomeBlacklistV2", comment, biomeBlacklistV2);
 
 		comment = "The maximum samples to be taken when searching for a biome.";
 		maxSamples = loadInt(Configuration.CATEGORY_GENERAL, "naturescompass.maxSamples", comment, maxSamples);
@@ -93,7 +102,11 @@ public class ConfigHandler {
 
 	public static List<String> getBiomeBlacklistV1() {
         return Lists.newArrayList(biomeBlacklistV1);
-	}
+    }
+
+    public static List<String> getBiomeBlacklistV2() {
+        return Lists.newArrayList(biomeBlacklistV2);
+    }
 
 	public static class ChangeListener {
 		@SubscribeEvent
