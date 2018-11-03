@@ -18,6 +18,7 @@ public class ConfigHandler {
 
 	public static boolean allowTeleport = true;
 	public static String[] biomeBlacklist = {};
+    private static String[] biomeBlacklistV1 = {};
 	public static int distanceModifier = 2500;
 	public static int sampleSpaceModifier = 16;
 	public static int maxSamples = 100000;
@@ -47,7 +48,7 @@ public class ConfigHandler {
 		sampleSpaceModifier = loadInt(Configuration.CATEGORY_GENERAL, "naturescompass.sampleSpaceModifier", comment, sampleSpaceModifier);
 
 		comment = "A list of biomes that the compass will not be able to search for. Both biome names and numerical biome IDs are accepted.";
-		biomeBlacklist = loadStringArray(Configuration.CATEGORY_GENERAL, "naturescompass.biomeBlacklist", comment, biomeBlacklist);
+		biomeBlacklistV1 = loadStringArray(Configuration.CATEGORY_GENERAL, "naturescompass.biomeBlacklistV1", comment, biomeBlacklistV1);
 
 		comment = "The maximum samples to be taken when searching for a biome.";
 		maxSamples = loadInt(Configuration.CATEGORY_GENERAL, "naturescompass.maxSamples", comment, maxSamples);
@@ -90,8 +91,8 @@ public class ConfigHandler {
 		return prop.getStringList();
 	}
 
-	public static List<String> getBiomeBlacklist() {
-		return Lists.newArrayList(biomeBlacklist);
+	public static List<String> getBiomeBlacklistV1() {
+        return Lists.newArrayList(biomeBlacklistV1);
 	}
 
 	public static class ChangeListener {

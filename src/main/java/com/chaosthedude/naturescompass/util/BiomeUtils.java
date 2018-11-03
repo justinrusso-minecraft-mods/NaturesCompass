@@ -8,7 +8,6 @@ import com.chaosthedude.naturescompass.config.ConfigHandler;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -113,7 +112,7 @@ public class BiomeUtils {
 	}
 
 	public static boolean biomeIsBlacklisted(Biome biome) {
-		final List<String> biomeBlacklist = ConfigHandler.getBiomeBlacklist();
+		final List<String> biomeBlacklist = ConfigHandler.getBiomeBlacklistV1();
 		return biomeBlacklist.contains(String.valueOf(Biome.getIdForBiome(biome)))
 				|| biomeBlacklist.contains(getBiomeName(biome)) || biomeBlacklist.contains(biome.getBiomeName());
 	}
